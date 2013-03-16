@@ -1,3 +1,10 @@
+## Building an API on OMB's Public Budget Database
+### Slide Deck for Ryan Harvey's talk at
+### Open Analytics Summit, Washington DC
+
+This slide deck was built using the...
+
+<!---
 <style>
 @import "http://fonts.googleapis.com/css?family=Open Sans:regular,semibold,italic,italicsemibold|Inconsolata&amp;v2";
 body {
@@ -45,6 +52,7 @@ pre {
   border-left: 3px solid #ccc;
 }
 </style>
+-->
 
 <h1><img src="images/io2012_logo.png"> HTML5 Slide Template</h1>
 
