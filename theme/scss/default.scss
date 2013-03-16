@@ -165,7 +165,7 @@ slides > slide {
   }
 
   &:not(.nobackground) {
-    //background: white url(../../images/google_developers_icon_128.png) ($brand-small-icon-size * 2) 98% no-repeat;
+    //background: white url(../../images/umd_logo_ball.png) ($brand-small-icon-size * 2) 98% no-repeat;
     //@include background-size($brand-small-icon-size $brand-small-icon-size);
 
     &:before {
@@ -174,7 +174,7 @@ slides > slide {
       position: absolute;
       bottom: $slide-top-bottom-padding / 2;
       left: $slide-left-right-padding;
-      background: url(../../images/google_developers_icon_128.png) no-repeat 0 50%;
+      background: url(../../images/umd_logo_ball.png) no-repeat 0 50%;
       @include background-size($brand-small-icon-size $brand-small-icon-size);
       padding-left: $brand-small-icon-size + 10;
       height: $brand-small-icon-size;
@@ -193,7 +193,7 @@ slides > slide {
   &.title-slide {
     &:after {
       content: '';
-      background: url(../../images/io2012_logo.png) no-repeat 100% 50%;
+      background: url(../../images/OAS-logo-Full-colour3-300x85.png) no-repeat 100% 50%;
       @include background-size(contain);
       position: absolute;
       bottom: $slide-top-bottom-padding;
@@ -524,7 +524,7 @@ table {
   th {
     color: white;
     font-size: 18px;
-    @include background(linear-gradient(top, $brand-blue 40%, $brand-blue-secondary2 80%) no-repeat);
+    @include background(linear-gradient(top, $brand-red 40%, $brand-red-secondary2 80%) no-repeat);
   }
 
   td, th {
@@ -571,6 +571,32 @@ article.smaller {
   p, ul {
     font-size: 20px;
     line-height: 24px;
+    letter-spacing: 0;
+  }
+  table {
+    td, th {
+      font-size: 14px;
+    }
+  }
+  pre {
+    font-size: 15px;
+    line-height: 20px;
+    letter-spacing: 0;
+  }
+  q {
+    font-size: 40px;
+    line-height: 48px;
+
+    &:before, &:after {
+      font-size: 60px;
+    }
+  }
+}
+
+article section.smaller {
+  p, ul {
+    font-size: 18px;
+    line-height: 22px;
     letter-spacing: 0;
   }
   table {
@@ -837,8 +863,8 @@ article.smaller {
 /* ===== SLIDE CONTENT ===== */
 .logoslide {
   img {
-    width: 383px;
-    height: 92px;
+    //width: 383px;
+    //height: 92px;
   }
 }
 
@@ -1080,4 +1106,13 @@ aside.gdbar {
   pre, code {
     font-family: monospace !important;
   }
+}
+
+.nobackground h2.shadowed {
+  @include text-shadow(2px 2px $gray-3);
+}
+
+a img {
+  text-decoration: none;
+  border-bottom: none;
 }

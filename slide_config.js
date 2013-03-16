@@ -2,8 +2,8 @@ var SLIDE_CONFIG = {
   // Slide settings
   settings: {
     title: "Building an API on OMB's<br>Public Budget Database",
-    subtitle: 'Thoughts on the need for APIs and how to design them',
-    eventTitle: 'Open Analytics Summit 2013, Washington DC',
+    subtitle: 'Thoughts and considerations on open data APIs',
+    eventTitle: 'Open Analytics Summit | Washington DC | March 25, 2013',
     useBuilds: true, // Default: true. False will turn off slide animation builds.
     usePrettify: true, // Default: true
     enableSlideAreas: true, // Default: true. False turns off the click areas on either slide of the slides.
@@ -20,7 +20,7 @@ var SLIDE_CONFIG = {
   // Author information
   presenters: [{
     name: 'Ryan Bensussan Harvey',
-    company: 'Ph.D. Candidate, U of Maryland | IT Project Manager, Office of Management and Budget',
+    company: 'Doctoral Candidate, University of Maryland at College Park<br/>IT Project Manager, Office of Management and Budget',
     gplus: 'http://plus.google.com/104292343319316932372/about',
     twitter: '@nihonjinrxs',
     www: 'http://about.me/ryan.b.harvey',
