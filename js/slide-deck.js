@@ -336,11 +336,15 @@ SlideDeck.prototype.loadConfig_ = function(config) {
 
       html = [p.name, p.company].join('<br>');
 
+      var email = p.email ? '<span>email</span><a href="mailto:' + p.email +
+          '">' + p.email + '</a>' : '';
+
       var gplus = p.gplus ? '<span>g+</span><a href="' + p.gplus +
           '">' + p.gplus.replace(/https?:\/\//, '') + '</a>' : '';
 
       var twitter = p.twitter ? '<span>twitter</span>' +
-          '<a href="http://twitter.com/' + p.twitter + '">' +
+          '<a href="http://twitter.com/' + (p.twitter[0] == 
+          "@" ? p.twitter.substring(1) : p.twitter) + '">' +
           p.twitter + '</a>' : '';
 
       var www = p.www ? '<span>www</span><a href="' + p.www +
@@ -349,7 +353,7 @@ SlideDeck.prototype.loadConfig_ = function(config) {
       var github = p.github ? '<span>github</span><a href="' + p.github +
           '">' + p.github.replace(/https?:\/\//, '') + '</a>' : '';
 
-      var html2 = [gplus, twitter, www, github].join('<br>');
+      var html2 = [email, gplus, twitter, www, github].join('<br>');
 
       if (dataConfigContact) {
         dataConfigContact.innerHTML = html2;

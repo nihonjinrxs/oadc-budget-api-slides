@@ -886,7 +886,7 @@ article section.smaller {
 }
 
 .thank-you-slide {
-  background: $brand-blue !important;
+  background: #ce1126 !important;  //$brand-blue-secondary2
   color: white;
 
   h2 {
@@ -1116,3 +1116,34 @@ a img {
   text-decoration: none;
   border-bottom: none;
 }
+
+.open-data-principle article q {
+  font-style: italic;
+  font-size: 35px;
+  line-height: 45px;
+  margin-bottom: 35px;
+  vertical-align: text-top;
+}
+
+.open-data-principle article p {
+  padding-top: 40px;
+}
+
+.thank-you-slide .avatar {
+  display: inline-block;
+  padding-right: 30px;
+  padding-bottom: 60px;
+}
+
+.thank-you-slide .avatar img {
+  @include border-radius(10px);
+}
+
+.thank-you-slide .thank-you-message {
+  display: inline-block;
+}
+
+.thank-you-slide .thank-you-message h2 {
+  padding-bottom: 75px;
+}
+

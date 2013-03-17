@@ -80,9 +80,9 @@ URL: https://code.google.com/p/io-2012-slides
       <h2>Why?</h2>
     </hgroup>
     <article>
-      <ul class="build">
+      <ul>
         <li>Government agencies need to determine what data can be made public</li>
-        <ul class="build">
+        <ul>
           <li>Legitimate concerns about citizen privacy and national security</li>
           <li>Some information is pre-decisional or could have adverse impacts</li>
           <li>Review processes are time-consuming and costly</li>
@@ -91,6 +91,14 @@ URL: https://code.google.com/p/io-2012-slides
         <li>Many researchers request bulk data formats, which agencies interpret as uploading flat files to their web servers</li>
       </ul>
     </article>
+  </slide>
+
+  <slide class="segue dark nobackground">
+    <aside class="gdbar"><img src="images/UM-webglobelg.gif"></aside>
+    <hgroup class="auto-fadein">
+      <h2>A Short Trip Back to 2007</h2>
+      <h3>A look at what we mean by "open" and how APIs help</h3>
+    </hgroup>
   </slide>
 
   <slide>
@@ -136,7 +144,6 @@ URL: https://code.google.com/p/io-2012-slides
           </tr>
         </table>
       </section>
-
       
       <footer class="source">source: (1) public.resource.org/open_government_meeting.html (2) public.resource.org/8_principles.html</footer>
     </article>
@@ -144,7 +151,7 @@ URL: https://code.google.com/p/io-2012-slides
 
   <slide>
     <hgroup>
-      <h2>A well-designed API can help with 5 of 8</h2>
+      <h2>A well-designed API can easily help with 5 of 8</h2>
     </hgroup>
     <article>
       <p>Drafted by Open Government Working Group, December 7-8, 2007.</p>
@@ -185,9 +192,174 @@ URL: https://code.google.com/p/io-2012-slides
           </tr>
         </table>
       </section>
-
       
       <footer class="source">source: (1) public.resource.org/open_government_meeting.html (2) public.resource.org/8_principles.html</footer>
+    </article>
+  </slide>
+
+  <slide class="open-data-principle">
+    <hgroup>
+      <h2>Open Data Principle: Primary</h2>
+    </hgroup>
+    <article>
+      <q>Data is collected at the source, with the highest possible level of granularity, not in aggregate or modified forms.</q>
+      <p>APIs can help agencies to deliver more granular data by:</p>
+      <ul>
+        <li>Connecting directly to transactional data stores</li>
+        <li>Connecting indirectly to transactional data stores via ETL processes</li>
+        <li>Allowing partial retrieval of data customized to the user's needs</li>
+        <li>Allowing retrieval of aggregate data via on-the-fly computation</li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide class="open-data-principle">
+    <hgroup>
+      <h2>Open Data Principle: Timely</h2>
+    </hgroup>
+    <article>
+      <q>Data is made available as quickly as necessary to preserve the value of the data.</q>
+      <p>APIs can help agencies to deliver data more quickly by:</p>
+      <ul>
+        <li>Automating the release of data through intelligent marking of database records</li>
+        <li>Pulling data from transactional data stores without human intervention</li>
+        <li>Reducing time required to aggregate data by providing on-the-fly computation in the API</li>
+        <li>Easing the burden of disclosure review processes by enabling automated testing via a private version of the same API</li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide class="open-data-principle">
+    <hgroup>
+      <h2>Open Data Principle: Accessible</h2>
+    </hgroup>
+    <article>
+      <q>Data is available to the widest range of users for the widest range of purposes.</q>
+      <p>APIs allow a broad set of users to determine the subset of data they need by:</p>
+      <ul>
+        <li>Providing for granularity, subset retrieval, and on-the-fly aggregation</li>
+        <li>Providing several data formats</li>
+        <li>Allowing for simultaneous availability of bulk download and streamed data</li>
+        <li>Providing the opportunity for multiple versions of the same API</li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide class="open-data-principle">
+    <hgroup>
+      <h2>Open Data Principle: Machine processable</h2>
+    </hgroup>
+    <article>
+      <q>Data is reasonably structured to allow automated processing.</q>
+      <p>APIs by definition are intended to enable automated processing:</p>
+      <ul>
+        <li>Calls can be ReSTful over the web or use heavier web service models</li>
+        <li>APIs can return a variety of data formats based on parameters in the API call</li>
+        <li>Providing API wrappers for common languages is a simple task that can further enable users to do automated processing</li>
+        <li>Agencies can use the same APIs to build visualizations and explanations of the data for their websites and publications</li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide class="open-data-principle">
+    <hgroup>
+      <h2>Open Data Principle: Non-proprietary</h2>
+    </hgroup>
+    <article>
+      <q>Data is available in a format over which no entity has exclusive control.</q>
+      <p>Well-designed APIs provide data in a variety of formats:</p>
+      <ul>
+        <li>APIs provide data in well-used open standards-based data formats like XML, JSON, and OData</li>
+        <li>Providing more proprietary formats is also possible where necessary, but does not preclude the open standards-based formats</li>
+        <li>Data format documentation can be baked into the API as a structure or schema call</li>
+        <li>Creation of documentation can be automated so that the API can self-generate and deploy documentation to a website</li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide class="segue dark nobackground">
+    <aside class="gdbar"><img src="images/UM-webglobelg.gif"></aside>
+    <hgroup class="auto-fadein">
+      <h2>The OMB Public Budget Database</h2>
+      <h3>About the dataset, and about putting an API on it</h3>
+    </hgroup>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Dataset: the OMB Public Budget Database</h2>
+    </hgroup>
+    <article>
+      <p>The Office of Management and Budget, each year, alongside the President's Budget, publishes the Public Budget Database, a dataset containing historical numbers and projections in summary from the Budget's published tables.</p>
+      <ul>
+        <li>Consists of a User's Guide and three data files
+          <ul>
+            <li>Budget Authority</li>
+            <li>Outlays</li>
+            <li>Receipts</li>
+          </ul>
+        </li>
+        <li>Data files are available as bulk downloads in CSV and Microsoft XLS formats</li>
+        <li>Data files are comparably small, and data is aggregated at the account level</li>
+        <li>Unique key for each record in each data file consists of the composition of 10 or more columns</li>
+        <li>Several limitations on use inherent in the data are discussed in the User's Guide</li>
+      </ul>
+      <footer class="source">source: (1) www.whitehouse.gov/omb/budget/Supplemental (2) Public Budget Database User's Guide, OMB</footer>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Code Slide (with Subtitle Placeholder)</h2>
+      <h3>Subtitle Placeholder</h3>
+    </hgroup>
+    <article>
+      <p>Press 'h' to highlight important sections of code (wrapped in <code>&lt;b&gt;</code>).</p>
+      <pre class="prettyprint" data-lang="javascript">
+&lt;script type='text/javascript'&gt;
+  // Say hello world until the user starts questioning
+  // the meaningfulness of their existence.
+  function helloWorld(world) {
+    <b>for (var i = 42; --i &gt;= 0;) {
+      alert('Hello ' + String(world));
+    }</b>
+  }
+&lt;/script&gt;
+</pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Code Slide (Smaller Font)</h2>
+    </hgroup>
+    <article class="smaller">
+      <pre class="prettyprint" data-lang="javascript">
+// Say hello world until the user starts questioning
+// the meaningfulness of their existence.
+function helloWorld(world) {
+  for (var i = 42; --i &gt;= 0;) {
+    alert('Hello ' + String(world));
+  }
+}
+</pre>
+<pre class="prettyprint" data-lang="css">
+&lt;style&gt;
+  p { color: pink }
+  b { color: blue }
+&lt;/style&gt;
+</pre>
+<pre class="prettyprint" data-lang="html">
+&lt;!DOCTYPE html>
+&lt;html>
+&lt;head>
+  &lt;title>My Awesome Page&lt;/title>
+&lt;/head>
+&lt;body>
+  &lt;p&gt;Hello world&lt;/p&gt;
+&lt;body>
+&lt;/html>
+</pre>
     </article>
   </slide>
 
@@ -492,7 +664,7 @@ function helloWorld(world) {
   </slide>
 
   <slide class="segue dark nobackground">
-    <aside class="gdbar"><img src="images/google_developers_icon_128.png"></aside>
+    <aside class="gdbar"><img src="images/UM-webglobelg.gif"></aside>
     <hgroup class="auto-fadein">
       <h2>Segue Slide</h2>
       <h3>Subtitle Placeholder</h3>
@@ -507,7 +679,7 @@ function helloWorld(world) {
   </slide>
   
   <slide class="segue dark quote nobackground">
-    <aside class="gdbar right bottom"><img src="images/google_developers_icon_128.png"></aside>
+    <aside class="gdbar right bottom"><img src="images/UM-webglobelg.gif"></aside>
     <article class="flexbox vleft auto-fadein">
       <q>
         This is an example of quote text.
@@ -535,10 +707,13 @@ function helloWorld(world) {
   </slide>
 
   <slide class="thank-you-slide segue nobackground">
-    <aside class="gdbar right"><img src="images/google_developers_icon_128.png"></aside>
+    <aside class="gdbar right"><img src="images/UM-webglobelg.gif"></aside>
     <article class="flexbox vleft auto-fadein">
-      <h2>&lt;Thank You!&gt;</h2>
-      <p>Important contact information goes here.</p>
+      <span class="reflect avatar"><img src="images/ryan-beard.png" alt="Ryan Harvey's avatar" title="Ryan Harvey's avatar" /></span>
+      <div class="thank-you-message">
+        <h2>&lt;Thank You!&gt;</h2>
+        <p>&nbsp;</p>
+      </div>
     </article>
     <p class="auto-fadein" data-config-contact>
       <!-- populated from slide_config.json -->
@@ -547,7 +722,15 @@ function helloWorld(world) {
 
   <slide class="logoslide dark nobackground">
     <article class="flexbox vcenter">
-      <span><img src="images/google_developers_logo_white.png"></span>
+      <div class="logoimage">
+        <img src="images/umd_logo_white.png">
+      </div>
+      <div class="logoimage" style="padding-top: 20px;">
+        <img src="images/math_web.png" style="height: 100px;">
+      </div>
+      <!-- div id="logoimage">
+        <img src="images/UM-NWC-logo.jpg">
+      </div -->
     </article>
   </slide>
 
