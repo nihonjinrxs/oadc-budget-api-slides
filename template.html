@@ -281,24 +281,12 @@ URL: https://code.google.com/p/io-2012-slides
     <aside class="gdbar"><img src="images/UM-webglobelg.gif"></aside>
     <hgroup class="auto-fadein">
       <h2>The OMB Public Budget Database</h2>
-      <h3>About the dataset, and about putting an API on it</h3>
+      <h3>About the dataset</h3>
     </hgroup>
     <aside class="note">
       1 Dataset
-      2 Limitations
-      3 Things to cover
-        a Spinning up an API in no time (Ruby + Rack + Grape)
-        a.1 Modeling entities (grape-entity)
-        b Connecting to a database via ActiveRecord (+ AR + SM or - Rack + Rails)
-        c Creating versions and components (version method)
-        d Defining API endpoints (desc "string" get :symbol do stuff_here end)
-        e Using different data formats (format, default_format methods)
-        f Self-generating documentation (+ Swagger + grape-swagger)
-        e Logging (logger object)
-        g Performance monitoring (+ NewRelic + newrelic-grape)
-      4 Work in progress -- more to do
-        a Skeleton project available at my github account
-        b When fully debugged, budget API will be available for others to use
+      2 Quirks/Considerations
+      3 Limitations
     </aside>
   </slide>
 
@@ -318,64 +306,350 @@ URL: https://code.google.com/p/io-2012-slides
         </li>
         <li>Data files are available as bulk downloads in CSV and Microsoft XLS formats</li>
         <li>Data files are comparably small, and data is aggregated at the account level</li>
-        <li>Unique key for each record in each data file consists of the composition of 10 or more columns</li>
+        <li>Unique key for each record in each data file consists of the composition of 7 or more columns</li>
         <li>Several limitations on use inherent in the data are discussed in the User's Guide</li>
       </ul>
-      <footer class="source">source: (1) www.whitehouse.gov/omb/budget/Supplemental (2) Public Budget Database User's Guide, OMB</footer>
+      <footer class="source">source: (1) www.whitehouse.gov/omb/budget/Supplemental (2) 2013 Public Budget Database User's Guide, OMB</footer>
     </article>
   </slide>
 
   <slide>
     <hgroup>
-      <h2>Code Slide (with Subtitle Placeholder)</h2>
-      <h3>Subtitle Placeholder</h3>
+      <h2>Dataset: Quirks and Considerations</h2>
     </hgroup>
     <article>
-      <p>Press 'h' to highlight important sections of code (wrapped in <code>&lt;b&gt;</code>).</p>
-      <pre class="prettyprint" data-lang="javascript">
-&lt;script type='text/javascript'&gt;
-  // Say hello world until the user starts questioning
-  // the meaningfulness of their existence.
-  function helloWorld(world) {
-    <b>for (var i = 42; --i &gt;= 0;) {
-      alert('Hello ' + String(world));
-    }</b>
-  }
-&lt;/script&gt;
+      <ul>
+        <li>Data is generally consistent with what's in the Treasury Monthly Statement
+          <ul>
+            <li>Corrections to reporting and classification errors</li>
+            <li>Analytical Perspectives volume of Budget addresses inconsistencies</li>
+          </ul>
+        </li>
+        <li>Historical records adjusted to match current budget structure</li>
+        <li>Current &amp; budget year estimates prepared by agencies per OMB Circ. A-11</li>
+        <li>Data have sufficient detail to produce totals consistent with those published in the corresponding Budget document
+          <ul>
+            <li>Outlay totals by agency, subfunction, and BEA category</li>
+            <li>Receipt totals by source</li>
+            <li>The deficit (on-budget, off-budget, and unified budget basis)</li>
+          </ul>
+        </li>
+      </ul>
+      <footer class="source">source: 2013 Public Budget Database User's Guide, OMB</footer>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Dataset: Limitations</h2>
+    </hgroup>
+    <article>
+      <ul>
+        <li>Data files do not include
+          <ul>
+            <li>Data by object classes</li>
+            <li>Data for program and financing accounts</li>
+            <li>Data for character class (other than grants to State/local governments)</li>
+            <li>Data for personnel summaries</li>
+            <li>Data for credit schedules</li>
+          </ul>
+        </li>
+        <li>Account-level details do not include current services estimates (based on proposed Budget only)</li>
+        <li>Receipts data prior to 1982 are aggregates, not true account-level detail</li>
+        <li>Budget authority data prior to 1976 not available</li>
+        <li>Outlay data for 1962-1981 tend to be account-level details</li>
+        <li>Outlay data for Legislative Branch &amp; DoD only bureau-level before 1982</li>
+      </ul>
+      <footer class="source">source: 2013 Public Budget Database User's Guide, OMB</footer>
+    </article>
+  </slide>
+
+  <slide class="segue dark nobackground">
+    <aside class="gdbar"><img src="images/UM-webglobelg.gif"></aside>
+    <hgroup class="auto-fadein">
+      <h2>Building the API</h2>
+      <h3>Some examples from my experience</h3>
+    </hgroup>
+    <aside class="note">
+      3 Things to cover
+        a Spinning up an API in no time (Ruby + Rack + Grape)
+        a.1 Modeling entities (grape-entity)
+        b Connecting to a database via ActiveRecord (+ AR + SM or - Rack + Rails)
+        c Creating versions and components (version method)
+        d Defining API endpoints (desc "string" get :symbol do stuff_here end)
+        e Using different data formats (format, default_format methods)
+        f Self-generating documentation (+ Swagger + grape-swagger)
+        e Logging (logger object)
+        g Performance monitoring (+ NewRelic + newrelic-grape)
+      4 Work in progress -- more to do
+        a Skeleton project available at my github account
+        b When fully debugged, budget API will be available for others to use
+    </aside>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Making the API Help with Openness</h2>
+    </hgroup>
+    <article>
+      <ul>
+        <li>Spinning up an API in no time</li>
+        <li>Defining API endpoints</li>
+        <li>Using different data formats</li>
+        <li>Versioning the API</li>
+        <li>Creating different API components</li>
+        <li>Modeling entities</li>
+        <li>Connecting to a database</li>
+        <li>Self-generating documentation</li>
+        <li>Logging</li>
+        <li>Performance monitoring</li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Spinning up an API in no time</h2>
+      <h3>Ruby + Rack + Grape</h3>
+    </hgroup>
+    <article>
+      <p>Use <a href="http://github.com/dblock/grape-on-rack"><code>github.com/dblock/grape-on-rack</code></a> as a great starting point.</p>
+      <p>The API is defined by subclassing the <code>Grape::API</code> class.</p>
+      <pre class="prettyprint" data-lang="ruby">
+module BudgetData
+  class API < Grape::API
+    ...
+  end
+end
+</pre>
+      <p>Add the API to your Rack configuration file (<code>config.ru</code>).</p>
+      <pre class="prettyprint" data-lang="ruby">
+run BudgetData::API
 </pre>
     </article>
   </slide>
 
   <slide>
     <hgroup>
-      <h2>Code Slide (Smaller Font)</h2>
+      <h2>Defining API endpoints</h2>
+    </hgroup>
+    <article>
+      <p>Create <code>resources</code> which contain endpoints.</p>
+      <pre class="prettyprint" data-lang="ruby">
+module BudgetData
+  class API < Grape::API
+    ...
+    <b>resource :outlays do
+      desc "Return outlays for the requested year"
+      params do
+        requires :year, :type => String, :desc => "Fiscal year"
+      end
+      get 'fy/:year' do  # Responds to route: .../outlays/fy/1994
+        Outlays.find(params[:year])
+      end
+      ...
+    end</b>
+  end
+end
+</pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Defining API endpoints: input validation</h2>
+    </hgroup>
+    <article>
+      <p>Define validations on the endpoint parameters.</p>
+      <pre class="prettyprint" data-lang="ruby">
+resource :outlays do
+  desc "Return outlays for the requested year"
+  params do
+    <b>requires :year, :type => String, 
+             # Regular expression below accepts years 1962-2017 and TQ
+             :regexp => /^(196[2-9]|19[7-9][0-9]|200[0-9]|201[0-7]|TQ)$/,</b> 
+             :desc => "Fiscal year"
+  end
+  get 'fy/:year' do  # Responds to route: .../outlays/fy/1994
+    Outlays.find(params[:year])
+  end
+  ...
+end
+</pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Using different data formats</h2>
+    </hgroup>
+    <article>
+      <p>Grape, by default, responds to requests for text, JSON and XML. To request one from the API, simply add the file extension to the end of the request.</p>
+      <p>To limit the formats available, use the <code>format</code> method.</p>
+      <pre class="prettyprint" data-lang="ruby">
+class BudgetData::API < Grape::API
+  <b>format :json # Now this API will only respond to requests for data in JSON format</b>
+  ...
+end
+</pre>
+      <p>But we don't want to limit the formats, we just want to specify a default!</p>
+      <pre class="prettyprint" data-lang="ruby">
+class BudgetData::API < Grape::API
+  <b>default_format :json # Much better!</b>
+  ...
+end
+</pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Using different data formats: custom formatters</h2>
+    </hgroup>
+    <article>
+      <p>For proprietary or unsupported formats, use a custom formatter.</p>
+      <pre class="prettyprint" data-lang="ruby">
+<b>module XlsFormatter
+  def self.call(object, env)
+    object.to_xls # this method can be defined by some other Gem or custom coded
+  end
+end</b>
+
+class BudgetData::API < Grape::API
+  <b>content_type :xls, "application/vnd.ms-excel"
+  formatter :xls, XlsFormatter</b>
+  ...
+end
+</pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Versioning the API</h2>
+    </hgroup>
+    <article>
+      <p>We can version the API using the <code>version</code> method.</p>
+      <pre class="prettyprint" data-lang="ruby">
+class BudgetData::APIv1 < Grape::API
+  version 'v1', :using => :path # Could be :header or :param
+end
+</pre>
+      <p>You can <code>mount</code> multiple versions in a single API for simultaneous use.</p>
+      <pre class="prettyprint" data-lang="ruby">
+class BudgetData::API < Grape::API
+  mount BudgetData::APIv1 # Could also specify a custom prefix via => '/prefix'
+  mount BudgetData::APIv2
+end
+</pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Creating different API components</h2>
     </hgroup>
     <article class="smaller">
-      <pre class="prettyprint" data-lang="javascript">
-// Say hello world until the user starts questioning
-// the meaningfulness of their existence.
-function helloWorld(world) {
-  for (var i = 42; --i &gt;= 0;) {
-    alert('Hello ' + String(world));
-  }
-}
+      <p>We can similarly create components of the API.</p>
+      <p>For example, we can create Outlays, BudgetAuthority, and Receipts.</p>
+      <pre class="prettyprint" data-lang="ruby">
+class BudgetData::OutlaysAPIv1 < Grape::API
+  ...
+end
+
+class BudgetData::BudgetAuthorityAPIv1 < Grape::API
+  ...
+end
+
+...
+
+class BudgetData::API < Grape::API
+  mount BudgetData::OutlaysAPIv1 => '/outlays/v1'
+  mount BudgetData::OutlaysAPIv2 => '/outlays/v2'
+  mount BudgetData::BudgetAuthorityAPIv1 => '/budauth/v1'
+  mount BudgetData::BudgetAuthorityAPIv2 => '/budauth/v2'
+  mount BudgetData::ReceiptsAPIv1 => '/receipts/v1'
+  mount BudgetData::ReceiptsAPIv2 => '/receipts/v2'
+end
 </pre>
-<pre class="prettyprint" data-lang="css">
-&lt;style&gt;
-  p { color: pink }
-  b { color: blue }
-&lt;/style&gt;
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Modeling entities</h2>
+    </hgroup>
+    <article>
+      <p></p>
+      <p></p>
+      <pre class="prettyprint" data-lang="ruby">
 </pre>
-<pre class="prettyprint" data-lang="html">
-&lt;!DOCTYPE html>
-&lt;html>
-&lt;head>
-  &lt;title>My Awesome Page&lt;/title>
-&lt;/head>
-&lt;body>
-  &lt;p&gt;Hello world&lt;/p&gt;
-&lt;body>
-&lt;/html>
+      <p></p>
+      <pre class="prettyprint" data-lang="ruby">
+</pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Connecting to a database</h2>
+      <h3>ActiveRecord</h3>
+    </hgroup>
+    <article>
+      <p></p>
+      <p></p>
+      <pre class="prettyprint" data-lang="ruby">
+</pre>
+      <p></p>
+      <pre class="prettyprint" data-lang="ruby">
+</pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Self-generating documentation</h2>
+      <h3>Swagger</h3>
+    </hgroup>
+    <article>
+      <p></p>
+      <p></p>
+      <pre class="prettyprint" data-lang="ruby">
+</pre>
+      <p></p>
+      <pre class="prettyprint" data-lang="ruby">
+</pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Logging</h2>
+      <h3></h3>
+    </hgroup>
+    <article>
+      <p></p>
+      <p></p>
+      <pre class="prettyprint" data-lang="ruby">
+</pre>
+      <p></p>
+      <pre class="prettyprint" data-lang="ruby">
+</pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Performance monitoring</h2>
+      <h3>New Relic</h3>
+    </hgroup>
+    <article>
+      <p></p>
+      <p></p>
+      <pre class="prettyprint" data-lang="ruby">
+</pre>
+      <p></p>
+      <pre class="prettyprint" data-lang="ruby">
 </pre>
     </article>
   </slide>
