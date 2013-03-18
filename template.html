@@ -283,6 +283,23 @@ URL: https://code.google.com/p/io-2012-slides
       <h2>The OMB Public Budget Database</h2>
       <h3>About the dataset, and about putting an API on it</h3>
     </hgroup>
+    <aside class="note">
+      1 Dataset
+      2 Limitations
+      3 Things to cover
+        a Spinning up an API in no time (Ruby + Rack + Grape)
+        a.1 Modeling entities (grape-entity)
+        b Connecting to a database via ActiveRecord (+ AR + SM or - Rack + Rails)
+        c Creating versions and components (version method)
+        d Defining API endpoints (desc "string" get :symbol do stuff_here end)
+        e Using different data formats (format, default_format methods)
+        f Self-generating documentation (+ Swagger + grape-swagger)
+        e Logging (logger object)
+        g Performance monitoring (+ NewRelic + newrelic-grape)
+      4 Work in progress -- more to do
+        a Skeleton project available at my github account
+        b When fully debugged, budget API will be available for others to use
+    </aside>
   </slide>
 
   <slide>
