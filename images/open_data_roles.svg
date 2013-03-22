@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<svg xmlns="http://www.w3.org/2000/svg"><!-- width="600" height="800" -->
+ <g>
+  <g>
+   <path d="m400,280l-110,-155" stroke-miterlimit="4" stroke-width="8" stroke="#d94d3a" fill="none"/>
+   <path d="m400,280l100,-155" stroke-miterlimit="4" stroke-width="8" stroke="#d94d3a" fill="none"/>
+   <path d="m400,280l175,1" stroke-miterlimit="4" stroke-width="8" stroke="#d94d3a" fill="none"/>
+   <path d="m400,280l110,155" stroke-miterlimit="4" stroke-width="8" stroke="#d94d3a" fill="none"/>
+   <path d="m400,280l-100,155" stroke-miterlimit="4" stroke-width="8" stroke="#d94d3a" fill="none"/>
+   <path d="m400,280l-175,1" stroke-miterlimit="4" stroke-width="8" stroke="#d94d3a" fill="none"/>
+   <rect width="210" height="100" x="505" y="230" stroke-miterlimit="4" stroke-width="3" stroke="#d94d3a" fill="#e6e6e6"/>
+   <rect width="210" height="100" x="455" y="80" stroke-miterlimit="4" stroke-width="3" stroke="#d94d3a" fill="#e6e6e6"/>
+   <rect width="210" height="100" x="135" y="380" stroke-miterlimit="4" stroke-width="3" stroke="#d94d3a" fill="#e6e6e6"/>
+   <rect width="210" height="100" x="75" y="230" stroke-miterlimit="4" stroke-width="3" stroke="#d94d3a" fill="#e6e6e6"/>
+   <rect width="210" height="100" x="135" y="80" stroke-miterlimit="4" stroke-width="3" stroke="#d94d3a" fill="#e6e6e6"/>
+   <rect width="210" height="100" x="455" y="380" stroke-miterlimit="4" stroke-width="3" stroke="#d94d3a" fill="#e6e6e6"/>
+   <!--path d="m460,280a61.56221,61.56221 0 1 1-123.12445,0a61.56221,61.56221 0 1 1123.12445,0z" stroke-miterlimit="4" stroke-width="3" stroke="#d94d3a" fill="#e6e6e6"/-->
+   <circle cx="400" cy="280" r="75" stroke-miterlimit="4" stroke-width="3" stroke="#d94d3a" fill="#e6e6e6"/>
+   <g>
+    <text x="400" y="240" font-family="Sans" fill="#d94d3a" text-anchor="middle" font-weight="normal" font-style="normal" font-size="32px">
+     <tspan x="400" y="260">Open</tspan>
+     <tspan x="400" y="290">Data</tspan>
+     <tspan x="400" y="320">Roles</tspan>
+    </text>
+    <text x="560" y="130" font-family="Sans" fill="#d94d3a" text-anchor="middle" font-weight="normal" font-style="normal" font-size="32px">
+     <tspan x="560" y="125">Data</tspan>
+     <tspan x="560" y="155">Owner</tspan>
+    </text>
+    <text x="610" y="280" font-family="Sans" fill="#d94d3a" text-anchor="middle" font-weight="normal" font-style="normal" font-size="32px">
+     <tspan x="610" y="275">Data</tspan>
+     <tspan x="610" y="305">Publisher</tspan>
+    </text>
+    <text x="560" y="430" font-family="Sans" fill="#d94d3a" text-anchor="middle" font-weight="normal" font-style="normal" font-size="32px">
+     <tspan x="560" y="425">API</tspan>
+     <tspan x="560" y="455">Developer</tspan>
+    </text>
+    <text x="240" y="430" font-family="Sans" fill="#d94d3a" text-anchor="middle" font-weight="normal" font-style="normal" font-size="32px">
+     <tspan x="240" y="425">API Wrapper</tspan>
+     <tspan x="240" y="455">Developer</tspan>
+    </text>
+    <text x="180" y="280" font-family="Sans" fill="#d94d3a" text-anchor="middle" font-weight="normal" font-style="normal" font-size="32px">
+     <tspan x="180" y="275">App/Viz</tspan>
+     <tspan x="180" y="305">Developer</tspan>
+    </text>
+    <text x="240" y="130" font-family="Sans" fill="#d94d3a" text-anchor="middle" font-weight="normal" font-style="normal" font-size="32px">
+     <tspan x="240" y="125">Data</tspan>
+     <tspan x="240" y="155">Analyst</tspan>
+    </text>
+   </g>
+  </g>
+ </g>
+</svg>

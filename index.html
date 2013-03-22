@@ -1,0 +1,937 @@
+<!--
+This Slide Deck is created by Ryan Bensussan 
+Harvey <ryan.b.harvey@gmail.com> using the 
+fantastic Google IO HTML5 Slide Template:
+
+Google IO 2012/2013 HTML5 Slide Template
+
+Authors: Eric Bidelman <ebidel@gmail.com>
+         Luke Mahé <lukem@google.com>
+
+URL: https://code.google.com/p/io-2012-slides
+-->
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <!--<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">-->
+  <!--<meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+  <!--This one seems to work all the time, but really small on ipad-->
+  <!--<meta name="viewport" content="initial-scale=0.4">-->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="stylesheet" media="all" href="theme/css/default.css">
+  <link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="theme/css/phone.css">
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->
+  <script data-main="js/slides" src="js/require-1.0.8.min.js"></script>
+</head>
+<body style="opacity: 0">
+
+<slides class="layout-widescreen">
+
+  <slide class="logoslide nobackground">
+    <article class="flexbox vcenter">
+      <div class="logoimage"> <!-- class="flexbox vcenter"-->
+        <img src="images/UM-primary.gif">
+      </div>
+      <div id="logoimage"> <!-- class="flexbox vcenter"-->
+        <img src="images/UM-NWC-logo.jpg">
+      </div>
+    </article>
+  </slide>
+
+  <slide class="title-slide segue nobackground">
+    <aside class="gdbar"><img src="images/UM-webglobelg.gif"></aside>
+    <!-- The content of this hgroup is replaced programmatically through the slide_config.json. -->
+    <hgroup class="auto-fadein">
+      <h1 data-config-title><!-- populated from slide_config.json --></h1>
+      <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+      <p data-config-presenter><!-- populated from slide_config.json --></p>
+    </hgroup>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Focus on government transparency is not new</h2>
+    </hgroup>
+    <article>
+      <img src="images/OpenGovernmentTimeline.png" class="reflect" alt="Timeline of Open Government Ideas in Law" title="Timeline of Open Government Ideas in Law" style="max-width: 980px; margin-bottom: 50px;">
+      <ul>
+        <li>Idea that government should be open to public scrutiny is long established</li>
+        <li>Started in the US with the First Amendment (1791): Freedom of the Press</li>
+        <li>Focus in the US picked up with the Freedom of Information Act (1966)</li>
+        <li>Renewed (recent) focus with the Open Government Initiative (2009-present)</li>
+        <li>Open Government Initiative has specifically given focus to data</li>
+      </ul>
+      
+      <footer class="source">source: en.wikipedia.org/wiki/Open_government#History</footer>
+    </article>
+  </slide>
+
+  <slide class="fill nobackground" style="background-image: url(images/piles-of-files-2922973702_31b4e63714_o.jpg)">
+    <hgroup>
+      <h2 class="red shadowed">So where's the data now?</h2>
+    </hgroup>
+    <footer class="source white">Piles of Files by Malcolm Craig, on Flickr<a href="http://www.flickr.com/photos/jed_september/2922973702/" title="Piles of Files by Malcolm Craig, on Flickr"><img src="images/Emblems-emblem-symbolic-link-icon.png" alt="Link icon to view Piles of Files by Malcolm Craig on Flickr"/></a></footer>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Why?</h2>
+    </hgroup>
+    <article>
+      <ul>
+        <li>Government agencies need to determine what data can be made public</li>
+        <ul>
+          <li>Legitimate concerns about citizen privacy and national security</li>
+          <li>Some information is pre-decisional or could have adverse impacts</li>
+          <li>Review processes are time-consuming and costly</li>
+        </ul>
+        <li>Once review processes are complete, agencies release data as quickly as possible, often without any modification of format</li>
+        <li>Many researchers request bulk data formats, which agencies interpret as uploading flat files to their web servers</li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>There are several roles you can play in Open Data</h2>
+    </hgroup>
+    <article class="centered">
+      <object data="images/open_data_roles.svg" type="image/svg+xml" width="800px" height="600px"></object>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>This talk will focus on the API Developer role</h2>
+    </hgroup>
+    <article class="centered">
+      <object data="images/open_data_roles_API_dev.svg" type="image/svg+xml" width="800px" height="600px"></object>
+    </article>
+  </slide>
+
+  <slide class="segue dark nobackground">
+    <aside class="gdbar"><img src="images/UM-webglobelg.gif"></aside>
+    <hgroup class="auto-fadein">
+      <h2>A Short Trip Back to 2007</h2>
+      <h3>A look at what we mean by "open" and how APIs help</h3>
+    </hgroup>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>8 Principles for Open Government Data (2007)</h2>
+    </hgroup>
+    <article>
+      <p>Drafted by Open Government Working Group, December 7-8, 2007.</p>
+      <section class="smaller">
+        <p>Government data shall be considered open if it is made public in a way that complies with the principles below:<p>
+        <table class="rows">
+          <tr>
+            <th>Complete</th>
+            <td>All public data is made available. Public data is data that is not subject to valid privacy, security or privilege limitations.</td>
+          </tr>
+          <tr>
+            <th>Primary</th>
+            <td>Data is as collected at the source, with the highest possible level of granularity, not in aggregate or modified forms.</td>
+          </tr>
+          <tr>
+            <th>Timely</th>
+            <td>Data is made available as quickly as necessary to preserve the value of the data.</td>
+          </tr>
+          <tr>
+            <th>Accessible</th>
+            <td>Data is available to the widest range of users for the widest range of purposes.</td>
+          </tr>
+          <tr>
+            <th>Machine processable</th>
+            <td>Data is reasonably structured to allow automated processing.</td>
+          </tr>
+          <tr>
+            <th>Non-discriminatory</th>
+            <td>Data is available to anyone, with no requirement of registration.</td>
+          </tr>
+          <tr>
+            <th>Non-proprietary</th>
+            <td>Data is available in a format over which no entity has exclusive control.</td>
+          </tr>
+          <tr>
+            <th>License-free</th>
+            <td>Data is not subject to any copyright, patent, trademark or trade secret regulation. Reasonable privacy, security and privilege restrictions may be allowed.</td>
+          </tr>
+        </table>
+      </section>
+      
+      <footer class="source">source: (1) public.resource.org/open_government_meeting.html (2) public.resource.org/8_principles.html</footer>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>A well-designed API can easily help with 5 of 8</h2>
+    </hgroup>
+    <article>
+      <p>Drafted by Open Government Working Group, December 7-8, 2007.</p>
+      <section class="smaller">
+        <p>Government data shall be considered open if it is made public in a way that complies with the principles below:<p>
+        <table class="rows">
+          <tr>
+            <th>Complete</th>
+            <td>All public data is made available. Public data is data that is not subject to valid privacy, security or privilege limitations.</td>
+          </tr>
+          <tr>
+            <th>Primary</th>
+            <td class="highlight">Data is as collected at the source, with the highest possible level of granularity, not in aggregate or modified forms.</td>
+          </tr>
+          <tr>
+            <th>Timely</th>
+            <td class="highlight">Data is made available as quickly as necessary to preserve the value of the data.</td>
+          </tr>
+          <tr>
+            <th>Accessible</th>
+            <td class="highlight">Data is available to the widest range of users for the widest range of purposes.</td>
+          </tr>
+          <tr>
+            <th>Machine processable</th>
+            <td class="highlight">Data is reasonably structured to allow automated processing.</td>
+          </tr>
+          <tr>
+            <th>Non-discriminatory</th>
+            <td>Data is available to anyone, with no requirement of registration.</td>
+          </tr>
+          <tr>
+            <th>Non-proprietary</th>
+            <td class="highlight">Data is available in a format over which no entity has exclusive control.</td>
+          </tr>
+          <tr>
+            <th>License-free</th>
+            <td>Data is not subject to any copyright, patent, trademark or trade secret regulation. Reasonable privacy, security and privilege restrictions may be allowed.</td>
+          </tr>
+        </table>
+      </section>
+      
+      <footer class="source">source: (1) public.resource.org/open_government_meeting.html (2) public.resource.org/8_principles.html</footer>
+    </article>
+  </slide>
+
+  <slide class="open-data-principle">
+    <hgroup>
+      <h2>Open Data Principle: Primary</h2>
+    </hgroup>
+    <article>
+      <q>Data is collected at the source, with the highest possible level of granularity, not in aggregate or modified forms.</q>
+      <p>APIs can help agencies to deliver more granular data by:</p>
+      <ul>
+        <li>Connecting directly to transactional data stores</li>
+        <li>Connecting indirectly to transactional data stores via ETL processes</li>
+        <li>Allowing partial retrieval of data customized to the user's needs</li>
+        <li>Allowing retrieval of aggregate data via on-the-fly computation</li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide class="open-data-principle">
+    <hgroup>
+      <h2>Open Data Principle: Timely</h2>
+    </hgroup>
+    <article>
+      <q>Data is made available as quickly as necessary to preserve the value of the data.</q>
+      <p>APIs can help agencies to deliver data more quickly by:</p>
+      <ul>
+        <li>Automating the release of data through intelligent marking of database records</li>
+        <li>Pulling data from transactional data stores without human intervention</li>
+        <li>Reducing time required to aggregate data by providing on-the-fly computation in the API</li>
+        <li>Easing the burden of disclosure review processes by enabling automated testing via a private version of the same API</li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide class="open-data-principle">
+    <hgroup>
+      <h2>Open Data Principle: Accessible</h2>
+    </hgroup>
+    <article>
+      <q>Data is available to the widest range of users for the widest range of purposes.</q>
+      <p>APIs allow a broad set of users to determine the subset of data they need by:</p>
+      <ul>
+        <li>Providing for granularity, subset retrieval, and on-the-fly aggregation</li>
+        <li>Providing several data formats</li>
+        <li>Allowing for simultaneous availability of bulk download and streamed data</li>
+        <li>Providing the opportunity for multiple versions of the same API</li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide class="open-data-principle">
+    <hgroup>
+      <h2>Open Data Principle: Machine processable</h2>
+    </hgroup>
+    <article>
+      <q>Data is reasonably structured to allow automated processing.</q>
+      <p>APIs by definition are intended to enable automated processing:</p>
+      <ul>
+        <li>Calls can be ReSTful over the web or use heavier web service models</li>
+        <li>APIs can return a variety of data formats based on parameters in the API call</li>
+        <li>Providing API wrappers for common languages is a simple task that can further enable users to do automated processing</li>
+        <li>Agencies can use the same APIs to build visualizations and explanations of the data for their websites and publications</li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide class="open-data-principle">
+    <hgroup>
+      <h2>Open Data Principle: Non-proprietary</h2>
+    </hgroup>
+    <article>
+      <q>Data is available in a format over which no entity has exclusive control.</q>
+      <p>Well-designed APIs provide data in a variety of formats:</p>
+      <ul>
+        <li>APIs provide data in well-used open standards-based data formats like XML, JSON, and OData</li>
+        <li>Providing more proprietary formats is also possible where necessary, but does not preclude the open standards-based formats</li>
+        <li>Data format documentation can be baked into the API as a structure or schema call</li>
+        <li>Creation of documentation can be automated so that the API can self-generate and deploy documentation to a website</li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide class="segue dark nobackground">
+    <aside class="gdbar"><img src="images/UM-webglobelg.gif"></aside>
+    <hgroup class="auto-fadein">
+      <h2>The OMB Public Budget Database</h2>
+      <h3>About the dataset</h3>
+    </hgroup>
+    <aside class="note">
+      1 Dataset
+      2 Quirks/Considerations
+      3 Limitations
+    </aside>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Dataset: the OMB Public Budget Database</h2>
+    </hgroup>
+    <article>
+      <p>The Office of Management and Budget, each year, alongside the President's Budget, publishes the Public Budget Database, a dataset containing historical numbers and projections in summary from the Budget's published tables.</p>
+      <ul>
+        <li>Consists of a User's Guide and three data files
+          <ul>
+            <li>Budget Authority</li>
+            <li>Outlays</li>
+            <li>Receipts</li>
+          </ul>
+        </li>
+        <li>Data files are available as bulk downloads in CSV and Microsoft XLS formats</li>
+        <li>Data files are comparably small, and data is aggregated at the account level</li>
+        <li>Unique key for each record in each data file consists of the composition of 7 or more columns</li>
+        <li>Several limitations on use inherent in the data are discussed in the User's Guide</li>
+      </ul>
+      <footer class="source">source: (1) www.whitehouse.gov/omb/budget/Supplemental (2) 2013 Public Budget Database User's Guide, OMB</footer>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Dataset: Quirks and Considerations</h2>
+    </hgroup>
+    <article>
+      <ul>
+        <li>Data is generally consistent with what's in the Treasury Monthly Statement
+          <ul>
+            <li>Corrections to reporting and classification errors</li>
+            <li>Analytical Perspectives volume of Budget addresses inconsistencies</li>
+          </ul>
+        </li>
+        <li>Historical records adjusted to match current budget structure</li>
+        <li>Current &amp; budget year estimates prepared by agencies per OMB Circ. A-11</li>
+        <li>Data have sufficient detail to produce totals consistent with those published in the corresponding Budget document
+          <ul>
+            <li>Outlay totals by agency, subfunction, and BEA category</li>
+            <li>Receipt totals by source</li>
+            <li>The deficit (on-budget, off-budget, and unified budget basis)</li>
+          </ul>
+        </li>
+      </ul>
+      <footer class="source">source: 2013 Public Budget Database User's Guide, OMB</footer>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Dataset: Limitations</h2>
+    </hgroup>
+    <article>
+      <ul>
+        <li>Data files do not include
+          <ul>
+            <li>Data by object classes</li>
+            <li>Data for program and financing accounts</li>
+            <li>Data for character class (other than grants to State/local governments)</li>
+            <li>Data for personnel summaries</li>
+            <li>Data for credit schedules</li>
+          </ul>
+        </li>
+        <li>Account-level details do not include current services estimates (based on proposed Budget only)</li>
+        <li>Receipts data prior to 1982 are aggregates, not true account-level detail</li>
+        <li>Budget authority data prior to 1976 not available</li>
+        <li>Outlay data for 1962-1981 tend to be account-level details</li>
+        <li>Outlay data for Legislative Branch &amp; DoD only bureau-level before 1982</li>
+      </ul>
+      <footer class="source">source: 2013 Public Budget Database User's Guide, OMB</footer>
+    </article>
+  </slide>
+
+  <slide class="segue dark nobackground">
+    <aside class="gdbar"><img src="images/UM-webglobelg.gif"></aside>
+    <hgroup class="auto-fadein">
+      <h2>Building the API</h2>
+      <h3>Some examples from my experience</h3>
+    </hgroup>
+    <aside class="note">
+      3 Things to cover
+        a Spinning up an API in no time (Ruby + Rack + Grape)
+        a.1 Modeling entities (grape-entity)
+        b Connecting to a database via ActiveRecord (+ AR + SM or - Rack + Rails)
+        c Creating versions and components (version method)
+        d Defining API endpoints (desc "string" get :symbol do stuff_here end)
+        e Using different data formats (format, default_format methods)
+        f Self-generating documentation (+ Swagger + grape-swagger)
+        e Logging (logger object)
+        g Performance monitoring (+ NewRelic + newrelic-grape)
+      4 Work in progress -- more to do
+        a Skeleton project available at my github account
+        b When fully debugged, budget API will be available for others to use
+    </aside>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Making the API Help with Openness (A Recap)</h2>
+    </hgroup>
+    <article>
+      <section class="smaller">
+        <table class="rows">
+          <thead>
+            <th></th>
+            <th>Primary</th>
+            <th>Timely</th>
+            <th>Accessible</th>
+            <th>Machine processable</th>
+            <th>Non-proprietary</th>
+          </thead>
+          <tr class="equal-width-data-cols">
+            <th>Easing data release processes, clearance and development</th>
+            <td></td>
+            <td class="highlight">&#10004;</td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr class="equal-width-data-cols">
+            <th>Allowing partial retrieval of data</th>
+            <td class="highlight">&#10004;</td>
+            <td></td>
+            <td class="highlight">&#10004;</td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr class="equal-width-data-cols">
+            <th>Allowing retrieval of aggregated data via on-the-fly computation</th>
+            <td class="highlight">&#10004;</td>
+            <td class="highlight">&#10004;</td>
+            <td class="highlight">&#10004;</td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr class="equal-width-data-cols">
+            <th>Providing delivery of data in open data formats</th>
+            <td></td>
+            <td></td>
+            <td class="highlight">&#10004;</td>
+            <td class="highlight">&#10004;</td>
+            <td class="highlight">&#10004;</td>
+          </tr>
+          <tr class="equal-width-data-cols">
+            <th>Allowing for delivery of data in custom data formats</th>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td class="highlight">&#10004;</td>
+          </tr>
+          <tr class="equal-width-data-cols">
+            <th>Allowing management of multiple simultaneous versions</th>
+            <td></td>
+            <td></td>
+            <td class="highlight">&#10004;</td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr class="equal-width-data-cols">
+            <th>Allowing access to data via multiple API views</th>
+            <td></td>
+            <td></td>
+            <td class="highlight">&#10004;</td>
+            <td class="highlight">&#10004;</td>
+            <td></td>
+          </tr>
+          <tr class="equal-width-data-cols">
+            <th>Modeling entities and pulling data from a database</th>
+            <td class="highlight">&#10004;</td>
+            <td class="highlight">&#10004;</td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr class="equal-width-data-cols">
+            <th>Automating documentation of data and data access</th>
+            <td></td>
+            <td></td>
+            <td class="highlight">&#10004;</td>
+            <td></td>
+            <td class="highlight">&#10004;</td>
+          </tr>
+          <tr class="equal-width-data-cols">
+            <th>Enabling data use and visualization</th>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td class="highlight">&#10004;</td>
+            <td></td>
+          </tr>
+        </table>
+      </section>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Making the API Help with Openness (Examples)</h2>
+    </hgroup>
+    <article class="columns-2">
+      <section>
+        <h3 style="font-weight: bold;">Topics I'll cover</h3>
+        <ul>
+          <li>Spinning up an API in no time</li>
+          <li>Defining API endpoints</li>
+          <li>Using different data formats</li>
+          <li>Versioning the API</li>
+          <li>Creating different API components</li>
+          <li>Modeling entities</li>
+          <li>Connecting to a database</li>
+          <li>Self-generating documentation</li>
+          <li>Using data via the API</li>
+        </ul>
+      </section>
+      <p>&nbsp;</p>
+      <section>
+        <h3 style="font-weight: bold;">My development stack</h3>
+        <a href="https://github.com/intridea/grape"><img src="images/languages/grape.png" alt="Grape" title="Grape" /></a>
+        <a href="http://rack.github.com/"><img src="images/languages/rack.jpg" alt="Rack" title="Rack" /></a>
+        <a href="http://www.ruby-lang.org/en/"><img src="images/languages/ruby.gif" alt="Ruby" title="Ruby" /></a>
+      </section>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Spinning up an API in no time</h2>
+      <h3>Ruby + Rack + Grape</h3>
+    </hgroup>
+    <article>
+      <p>Use <a href="http://github.com/dblock/grape-on-rack"><code>github.com/dblock/grape-on-rack</code></a> as a great starting point.</p>
+      <p>The API is defined by subclassing the <code>Grape::API</code> class.</p>
+      <pre class="prettyprint" data-lang="ruby">
+module BudgetData
+  class API < Grape::API
+    ...
+  end
+end
+</pre>
+      <p>Add the API to your Rack configuration file (<code>config.ru</code>).</p>
+      <pre class="prettyprint" data-lang="ruby">
+run BudgetData::API
+</pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Defining API endpoints</h2>
+    </hgroup>
+    <article>
+      <p>Create <code>resources</code> which contain endpoints.</p>
+      <pre class="prettyprint" data-lang="ruby">
+module BudgetData
+  class API < Grape::API
+    ...
+    <b>resource :outlays do
+      desc "Return outlays for the requested year"
+      params do
+        requires :year, :type => String, :desc => "Fiscal year"
+      end
+      get 'fy/:year' do  # Responds to route: .../outlays/fy/1994
+        Outlays.find(params[:year])
+      end
+      ...
+    end</b>
+  end
+end
+</pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Defining API endpoints: input validation</h2>
+    </hgroup>
+    <article>
+      <p>Define validations on the endpoint parameters.</p>
+      <pre class="prettyprint" data-lang="ruby">
+resource :outlays do
+  desc "Return outlays for the requested year"
+  params do
+    <b>requires :year, :type => String, 
+             # Regular expression below accepts years 1962-2017 and TQ
+             :regexp => /^(196[2-9]|19[7-9][0-9]|200[0-9]|201[0-7]|TQ)$/,</b> 
+             :desc => "Fiscal year"
+  end
+  get 'fy/:year' do  # Responds to route: .../outlays/fy/1994
+    Outlays.find(params[:year])
+  end
+  ...
+end
+</pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Using different data formats</h2>
+    </hgroup>
+    <article>
+      <p>Grape, by default, responds to requests for text, JSON and XML. To request one from the API, simply add the file extension to the end of the request.</p>
+      <p>To limit the formats available, use the <code>format</code> method.</p>
+      <pre class="prettyprint" data-lang="ruby">
+class BudgetData::API < Grape::API
+  <b>format :json # Now this API will only respond to requests with JSON format</b>
+  ...
+end
+</pre>
+      <p>But we don't want to limit the formats, we just want to specify a default!</p>
+      <pre class="prettyprint" data-lang="ruby">
+class BudgetData::API < Grape::API
+  <b>default_format :json # Now, JSON format requires no extension on the path; 
+                       # for other formats, specify an extension (.xml, etc)</b>
+  ...
+end
+</pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Using different data formats: custom formatters</h2>
+    </hgroup>
+    <article>
+      <p>For proprietary or unsupported formats, use a custom formatter.</p>
+      <pre class="prettyprint" data-lang="ruby">
+<b>module XlsFormatter
+  def self.call(object, env)
+    object.to_xls # this method can be defined by 
+                  # some other Gem or custom coded
+  end
+end</b>
+
+class BudgetData::API < Grape::API
+  <b>content_type :xls, "application/vnd.ms-excel"
+  # The symbol specifies the extension this will respond to (:xls => .xls)
+  formatter :xls, XlsFormatter</b>
+  ...
+end
+</pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Versioning the API</h2>
+    </hgroup>
+    <article>
+      <p>We can version the API using the <code>version</code> method.</p>
+      <pre class="prettyprint" data-lang="ruby">
+class BudgetData::APIv1 < Grape::API
+  version 'v1', :using => :path # Could be :header or :param
+end
+</pre>
+      <p>You can <code>mount</code> multiple versions in a single API for simultaneous use.</p>
+      <pre class="prettyprint" data-lang="ruby">
+class BudgetData::API < Grape::API
+  mount BudgetData::APIv1 # Could also specify a custom prefix via => '/prefix'
+  mount BudgetData::APIv2
+end
+</pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Creating different API components</h2>
+    </hgroup>
+    <article class="smaller">
+      <p>We can similarly create components of the API.</p>
+      <p>For example, we can create Outlays, BudgetAuthority, and Receipts.</p>
+      <pre class="prettyprint" data-lang="ruby">
+class BudgetData::OutlaysAPIv1 < Grape::API
+  ...
+end
+
+class BudgetData::BudgetAuthorityAPIv1 < Grape::API
+  ...
+end
+
+...
+
+class BudgetData::API < Grape::API
+  mount BudgetData::OutlaysAPIv1 => '/outlays/v1'
+  mount BudgetData::OutlaysAPIv2 => '/outlays/v2'
+  mount BudgetData::BudgetAuthorityAPIv1 => '/budauth/v1'
+  mount BudgetData::BudgetAuthorityAPIv2 => '/budauth/v2'
+  mount BudgetData::ReceiptsAPIv1 => '/receipts/v1'
+  mount BudgetData::ReceiptsAPIv2 => '/receipts/v2'
+end
+</pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Modeling entities</h2>
+    </hgroup>
+    <article>
+      <p></p>
+      <p></p>
+      <pre class="prettyprint" data-lang="ruby">
+</pre>
+      <p></p>
+      <pre class="prettyprint" data-lang="ruby">
+</pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Connecting to a database</h2>
+      <h3>ActiveRecord</h3>
+    </hgroup>
+    <article>
+      <p></p>
+      <p></p>
+      <pre class="prettyprint" data-lang="ruby">
+</pre>
+      <p></p>
+      <pre class="prettyprint" data-lang="ruby">
+</pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Self-generating documentation</h2>
+      <h3>Swagger</h3>
+    </hgroup>
+    <article>
+      <p></p>
+      <p></p>
+      <pre class="prettyprint" data-lang="ruby">
+</pre>
+      <p></p>
+      <pre class="prettyprint" data-lang="ruby">
+</pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>API-testing documentation</h2>
+      <h3>Apiary.io Blueprints</h3>
+    </hgroup>
+    <article>
+      <p></p>
+      <p></p>
+      <pre class="prettyprint" data-lang="ruby">
+</pre>
+      <p></p>
+      <pre class="prettyprint" data-lang="ruby">
+</pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Using data via the API</h2>
+      <h3></h3>
+    </hgroup>
+    <article>
+      <p></p>
+      <p></p>
+      <pre class="prettyprint" data-lang="ruby">
+</pre>
+      <p></p>
+      <pre class="prettyprint" data-lang="ruby">
+</pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>But I don't code in Ruby...</h2>
+      <h3>Options exist for other languages!</h3>
+    </hgroup>
+    <article class="centered">
+        <div class="centered" style="display: inline-block;">
+          <img src="images/languages/php.jpg" alt="PHP" title="PHP" width="160px" />
+          <p><a href="http://getfrapi.com">FRAPI</a></p>
+        </div>
+        <div class="centered" style="display: inline-block;">
+          <img src="images/languages/python.png" alt="Python" title="Python" width="240px" />
+          <p><a href="http://bottlepy.org/">Bottle</a></p>
+        </div>
+        <div class="centered" style="display: inline-block;">
+          <img src="images/languages/java.png" alt="Java" title="Java" width="170px" />
+          <p><a href="http://docs.oracle.com/javaee/6/tutorial/doc/giepu.html">JAX-RS</a></p>
+        </div>
+        <div class="centered" style="display: inline-block;">
+          <img src="images/languages/dotNET.jpg" alt="Microsoft .NET" title="Microsoft .NET" width="120px" />
+          <p><a href="http://msdn.microsoft.com/en-us/magazine/dd315413.aspx">WCF REST</a></p>
+        </div>
+        <div class="centered" style="display: inline-block;">
+          <img src="images/languages/perl.png" alt="Perl" title="Perl" width="180px" />
+          <p><a href="http://perldancer.org/">Perl Dancer</a></p>
+        </div>
+        <div class="centered" style="display: inline-block;">
+          <img src="images/languages/Nodejs.png" alt="Node.js" title="Node.js" width="230px" />
+          <p><a href="http://mcavage.github.com/node-restify/">Restify</a></p>
+        </div>
+        <div class="centered" style="display: inline-block;">
+          <img src="images/languages/clojure.png" alt="Clojure" title="Clojure" width="200px" />
+          <p><a href="http://clojure-liberator.github.com/">Liberator</a><p>
+        </div>
+        <div class="centered" style="display: inline-block;">
+          <img src="images/languages/Google_Go.jpg" alt="Google Go" title="Google Go" width="200px" />
+          <p><a href="http://code.google.com/p/goweb/">Goweb</a></p>
+        </div>
+        <div class="centered" style="display: inline-block;">
+          <img src="images/languages/scala.jpg" alt="Scala" title="Scala" width="160px" />
+          <p><a href="http://bowlerframework.org/">Bowler</a></p>
+        </div>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>So now you've built an API...  let others find it!</h2>
+    </hgroup>
+    <article class="flexbox vcenter centered">
+        <div class="centered" style="display: inline-block; vertical-align: middle;">
+          <h3 style="font-weight: bold;">API Directories</h3>
+          <p>
+            <a href="http://www.programmableweb.com" style="padding-right: 30px;">
+              <img src="images/get_traffic/programmableweb.png" alt="Programmable Web" title="Programmable Web" width="220px" />
+            </a>
+            <a href="http://www.apihub.com/" style="padding-right: 30px;">
+              <img src="images/get_traffic/APIhub-by-mulesoft.png" alt="APIhub by Mulesoft" title="APIhub by Mulesoft" width="220px" />
+            </a>
+            <a href="http://apis.io/">
+              <img src="images/get_traffic/apis-io-logo.png" alt="APIs.io" title="APIs.io" width="220px" />
+            </a>
+          </p>
+          <p style="padding-top: 20px;">
+            <a href="http://apiary.io/" style="padding-right: 30px;">
+              <img src="images/get_traffic/apiary-io-beta.png" alt="apiary.io beta" title="apiary.io beta" width="250px" />
+            </a>
+            <a href="http://www.mashape.com/">
+              <img src="images/get_traffic/mashape.png" alt="MaShape" title="MaShape" width="220px" />
+            </a>
+          </p>
+          <h3 style="font-weight: bold;">API Management Services</h3>
+          <p>
+            <a href="http://www.mashery.com/" style="padding-right: 30px;">
+              <img src="images/get_traffic/mashery.png" alt="Mashery" title="Mashery" width="150px" />
+            </a>
+            <a href="http://www.layer7tech.com/" style="padding-right: 30px;">
+              <img src="images/get_traffic/layer7.png" alt="Layer 7" title="Layer 7" width="180px" />
+            </a>
+            <a href="http://apigee.com/about/" style="padding-right: 30px;">
+              <img src="images/get_traffic/apigee.gif" alt="Apigee" title="Apigee" width="160px" />
+            </a>
+            <a href="http://www.3scale.com/">
+              <img src="images/get_traffic/3scale.jpg" alt="3Scale" title="3Scale" width="240px" />
+            </a>
+          </p>
+        </div>
+    </article>
+  </slide>
+
+  <slide class="segue dark quote nobackground">
+    <aside class="gdbar right bottom"><img src="images/UM-webglobelg.gif"></aside>
+    <article class="flexbox vleft auto-fadein">
+      <q>
+        By allowing the community to build API libraries it gives you a chance to put the spotlight on developers, increases the chance for competition, spurs innovation and developers will rise to the occasion.
+      </q>
+      <div class="author">
+        Kin Lane<br>
+        <a href="http://www.apievangelist.com/2011/04/01/use-your-community-to-build-api-code-libraries/">apievangelist.com</a>
+      </div>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>So, to the developers out there:</h2>
+      <h3></h3>
+    </hgroup>
+    <article class="flexbox vcenter">
+      <p style="font-size: 1.2em; font-weight: bold;">Don't wait around for someone else to build an API for you!</p>
+      <p class="red3" style="font-size: 3em; font-weight: bold;">Build it yourself!</p>
+    </article>
+  </slide>
+
+  <slide class="thank-you-slide segue nobackground">
+    <aside class="gdbar right"><img src="images/UM-webglobelg.gif"></aside>
+    <article class="flexbox vleft auto-fadein">
+      <span class="reflect avatar"><img src="images/ryan-beard.png" alt="Ryan Harvey's avatar" title="Ryan Harvey's avatar" /></span>
+      <div class="thank-you-message">
+        <h2>&lt;Thank You!&gt;</h2>
+        <p>&nbsp;</p>
+      </div>
+    </article>
+    <p class="auto-fadein" data-config-contact>
+      <!-- populated from slide_config.json -->
+    </p>
+  </slide>
+
+  <slide class="backdrop"></slide>
+
+</slides>
+
+<!-- script>
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-XXXXXXXX-1']);
+_gaq.push(['_trackPageview']);
+
+(function() {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
+</script -->
+
+<!--[if IE]>
+  <script src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
+  <script>CFInstall.check({mode: 'overlay'});</script>
+<![endif]-->
+</body>
+</html>
