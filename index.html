@@ -526,13 +526,11 @@ URL: https://code.google.com/p/io-2012-slides
           <li>Versioning the API</li>
           <li>Creating different API components</li>
           <li>Working with the data</li>
-          <li>Modeling entities</li>
           <li>Connecting to a database</li>
           <li>Self-generating and API-testing documentation</li>
-          <li>Using data via the API</li>
         </ul>
       </section>
-      <p>&nbsp;</p>
+      <p>&nbsp;</p><p>&nbsp;</p>
       <section>
         <h3 style="font-weight: bold;">My development stack</h3>
         <a href="https://github.com/intridea/grape"><img src="images/languages/grape.png" alt="Grape" title="Grape" /></a>
@@ -775,40 +773,109 @@ end
 
   <slide>
     <hgroup>
-      <h2>Modeling entities</h2>
-      <h3>Grape::Entity</h3>
+      <h2>Connecting to a database: the roadmap</h2>
+      <h3>ActiveRecord + Grape::Entity</h3>
     </hgroup>
-    <article>
-      <p>Grape::Entity allows you to create views into your models for the API's use.</p>
-      <p>Define a model as usual, but subclass <code>Grape::Entity</code>, <code>include Grape::Entity::DSL</code> or subclass for a nested/namespaced entity class.</p>
-      <pre class="prettyprint" data-lang="ruby">
-class BudgetData::BudgetAuthority
-  ...
-  def entity # using the nested/namespaced class version
-    BudgetData::BudgetAuthority.new(self)
-  end
-
-  class Entity < Grape::Entity
-    expose :agency, :bureau, :bea_category, :budget_year
-  end
-end
+    <article class="smaller">
+      <p>First, a roadmap of what we're trying to do:</p>
+      <ul>
+        <li><b class="red3">Models</b> connect to the database tables via ActiveRecord.<br/>Model classes subclass <code>ActiveRecord::Base</code>.</li>
+        <li><b class="red3">Entities</b> provide views that expose model fields to the API.<br/>Entity classes subclass <code>Grape::Entity</code>.</li>
+        <li><b class="red3">Resources</b> are subsets of the API that can be mounted (discussed earlier).<br/>Resource classes subclass <code>Grape::API</code>.</li>
+      </ul>
+      <pre class="prettyprint" data-lang="folder structure">
+- api
+  * api.rb (main API definition)
+  - entities
+    * budget_authority_entity.rb (entity definition)
+  - models
+    * budget_authority.rb (model definition)
+  - resources
+    * budget_authority_api.rb (resource definition)
 </pre>
-      <footer class="source">note: This code is very simplified. Check the grape-entity project on GitHub (<a href="https://github.com/agileanimal/grape-entity">https://github.com/agileanimal/grape-entity</a>) for information.</footer>
     </article>
   </slide>
 
   <slide>
     <hgroup>
-      <h2>Connecting to a database</h2>
+      <h2>Connecting to a database: model classes</h2>
       <h3>ActiveRecord + Standalone Migrations</h3>
     </hgroup>
-    <article>
-      <p></p>
-      <p></p>
+    <article style="margin-top:10px;">
+      <p>So, a model might look like:</p>
       <pre class="prettyprint" data-lang="ruby">
+class BudgetData::BudgetAuthority < ActiveRecord::Base
+  set_table_name 'budauth_facts'
+  attr_readonly :agency, :bureau, :bea_category, :budget_year, ...
+  has_one :agency
+  has_one :bureau
+  has_one :bea_category
+  ...
+  def budget_authority_by_year(year)
+    BudgetAuthority.find(year)
+  end
+end
 </pre>
-      <p></p>
+      <p>Bonus: the <a href="https://github.com/thuss/standalone-migrations"><code>standalone_migrations</code></a> gem provides the migrations framework used in Rails as a standalone capability.</p>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Connecting to a database: entity classes</h2>
+      <h3>ActiveRecord + Grape::Entity</h3>
+    </hgroup>
+    <article class="smaller" style="margin-top:10px;">
+      <p>You can define a new Entity class by:<p>
+        <ul>
+          <li>subclassing <code>Grape::Entity</code> to create a standalone Entity class</li>
+          <li>adding <code>include Grape::Entity::DSL</code> to a class</li>
+          <li>adding a nested/namespaced entity class that subclasses <code>Grape::Entity</code></li>
       <pre class="prettyprint" data-lang="ruby">
+class BudgetData::BudgetAuthorityEntity < Grape::Entity # standalone entity
+  expose :agency, :bureau, :bea_category, :budget_year...
+  ...
+  def 
+end
+</pre>
+      <pre class="prettyprint" data-lang="ruby">
+class BudgetData::BudgetAuthority < ActiveRecord::Base # nested/namespaced
+  ...
+  def entity
+    BudgetData::BudgetAuthority.new(self)
+  end
+  class Entity < Grape::Entity
+    expose :agency, :bureau, :bea_category, :budget_year, ...
+  end
+end
+</pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Connecting to a database: using entities</h2>
+      <h3>ActiveRecord + Grape::Entity</h3>
+    </hgroup>
+    <article class="smaller" style="margin-top:10px;">
+      <p>You can use entity classes in your API via the <code>present</code> method:<p>
+      <pre class="prettyprint" data-lang="ruby">
+class BudgetData::BudgetAuthorityAPI < Grape::API
+  version 'v1', :using => :path
+  resource :budget_authority do
+    desc "Return budget authority for the requested year"
+    params do
+      requires :year, :type => String, 
+               :regexp => /^(196[2-9]|19[7-9][0-9]|200[0-9]|201[0-7]|TQ)$/, 
+               :desc => "Fiscal year"
+    end
+    get 'fy/:year' do  # Responds to route: .../budget_authority/fy/1994
+      budauth = BudgetData::BudgetAuthority.budget_authority_by_year(params[:year])
+      present budauth, with: BudgetData::BudgetAuthorityEntity
+    end
+    ...
+  end
+end
 </pre>
     </article>
   </slide>
@@ -850,7 +917,7 @@ HOST: http://my.budgetdata.host.com/
 
 --- Public Budget Database API v1 ---
 ---
-Generic information about the API and v1 goes here.
+Generic information about the API v1 goes here.
 ---
 
 --- Budget Authority ---
@@ -861,22 +928,6 @@ GET /budauth/v1/fy/2003
 { ... expected JSON goes here ... }
 
 ...
-</pre>
-    </article>
-  </slide>
-
-  <slide>
-    <hgroup>
-      <h2>Using data via the API</h2>
-      <h3></h3>
-    </hgroup>
-    <article>
-      <p></p>
-      <p></p>
-      <pre class="prettyprint" data-lang="ruby">
-</pre>
-      <p></p>
-      <pre class="prettyprint" data-lang="ruby">
 </pre>
     </article>
   </slide>
