@@ -99,7 +99,10 @@ URL: https://code.google.com/p/io-2012-slides
       <h2>There are several roles you can play in Open Data</h2>
     </hgroup>
     <article class="centered">
-      <object data="images/open_data_roles.svg" type="image/svg+xml" width="800px" height="600px"></object>
+      <!--object data="images/open_data_roles.svg" type="image/svg+xml" width="800px" height="600px"-->
+      <img src="images/open_data_roles.png" width="800px" height="494px" alt="Diagram of Open Data Roles" />
+      <!--/object-->
+      <!--embed src="images/open_data_roles.svg" width="800px" height="600px"/-->
     </article>
   </slide>
 
@@ -108,7 +111,10 @@ URL: https://code.google.com/p/io-2012-slides
       <h2>This talk will focus on the API Developer role</h2>
     </hgroup>
     <article class="centered">
-      <object data="images/open_data_roles_API_dev.svg" type="image/svg+xml" width="800px" height="600px"></object>
+      <!--object data="images/open_data_roles_API_dev.svg" type="image/svg+xml" width="800px" height="600px"-->
+      <img src="images/open_data_roles_API_dev.png" width="800px" height="513px" alt="Diagram of Open Data Roles with API Developer highlighted"/>
+      <!--/object-->
+      <!--embed src="images/open_data_roles_API_dev.svg" width="800px" height="600px"/-->
     </article>
   </slide>
 
@@ -486,7 +492,7 @@ URL: https://code.google.com/p/io-2012-slides
             <td></td>
           </tr>
           <tr class="equal-width-data-cols">
-            <th>Automating documentation of data and data access</th>
+            <th>Automating documentation of data and testing of data access</th>
             <td></td>
             <td></td>
             <td class="highlight">&#10004;</td>
@@ -519,9 +525,10 @@ URL: https://code.google.com/p/io-2012-slides
           <li>Using different data formats</li>
           <li>Versioning the API</li>
           <li>Creating different API components</li>
+          <li>Working with the data</li>
           <li>Modeling entities</li>
           <li>Connecting to a database</li>
-          <li>Self-generating documentation</li>
+          <li>Self-generating and API-testing documentation</li>
           <li>Using data via the API</li>
         </ul>
       </section>
@@ -708,23 +715,92 @@ end
 
   <slide>
     <hgroup>
-      <h2>Modeling entities</h2>
+      <h2>Working with the data</h2>
+      <h3>Drake (future) + Ruby + CSV + a little SQLite3</h3>
     </hgroup>
-    <article>
-      <p></p>
-      <p></p>
-      <pre class="prettyprint" data-lang="ruby">
+    <article class="smaller">
+      <p>To get the data ready, we need to preprocess it. <a href="https://github.com/Factual/drake">Drake</a> is a new tool for data workflow management.</p>
+      <p>First, create a workflow file called <code>workflow.d</code>.  When ready, call <code>drake</code> in the shell to run.</p>
+      <pre class="prettyprint" data-lang="drake">
+BASE=/data/budget-db-2013
+
+; Pre-process each CSV to pull metadata into dimension tables and store in DB
+budauth.sqlite <- budauth.csv [ruby-script file:./scripts/budauth_fact_dims.rb]
+outlays.sqlite <- outlays.csv [ruby-script file:./scripts/outlays_fact_dims.rb]
+receipts.sqlite <- receipts.csv [ruby-script file:./scripts/receipts_fact_dims.rb]
+
+; Combine dimension tables
+budget_data.sqlite <- budauth.sqlite, outlays.sqlite, receipts.sqlite
+  ; run SQL script as shell command, use external executable, etc.
+
+; Check data integrity against CSV files
+budget_data_check.log <- budget_data.sqlite, budauth.csv, outlays.csv, receipts.csv
+  # Python code goes here...
+...
 </pre>
-      <p></p>
+      <footer class="source">note: Drake is still under development. Check the project on GitHub (<a href="https://github.com/Factual/drake">https://github.com/Factual/drake</a>) for updated implementation status.</footer>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Working with the data: an example script</h2>
+      <h3>Drake (future) + Ruby + CSV + a little SQLite3</h3>
+    </hgroup>
+    <article class="smaller">
+      <p>Then, for each step, define the script. First is <code>budauth_fact_dims.rb</code> (in my case, in Ruby).</p>
       <pre class="prettyprint" data-lang="ruby">
+require 'csv'
+require 'sqlite3'
+
+budauth_csv = CSV.read ARGV[0]
+get_db_name = ->(arg) {parts = arg.split('.'); parts.pop; parts.join('.')}
+budauth_db = SQLite3::Database.new get_db_name.call ARGV[1]
+
+# Create tables and insert data
+budauth_csv.column_headers = budauth_csv.delete_at 0
+budauth_db.transaction do |db|
+  db.execute "create table budauth_facts ( ... );"
+  ... 
+end
+budauth_csv.foreach do |row| 
+  budauth_db.transaction do |db| ...
+    # Pull out metadata, save metadata to dimension tables...
+    db.execute "insert into budauth_facts ( ?, ... )", *row
+  end
+end
 </pre>
     </article>
   </slide>
 
   <slide>
     <hgroup>
+      <h2>Modeling entities</h2>
+      <h3>Grape::Entity</h3>
+    </hgroup>
+    <article>
+      <p>Grape::Entity allows you to create views into your models for the API's use.</p>
+      <p>Define a model as usual, but subclass <code>Grape::Entity</code>, <code>include Grape::Entity::DSL</code> or subclass for a nested/namespaced entity class.</p>
+      <pre class="prettyprint" data-lang="ruby">
+class BudgetData::BudgetAuthority
+  ...
+  def entity # using the nested/namespaced class version
+    BudgetData::BudgetAuthority.new(self)
+  end
+
+  class Entity < Grape::Entity
+    expose :agency, :bureau, :bea_category, :budget_year
+  end
+end
+</pre>
+      <footer class="source">note: This code is very simplified. Check the grape-entity project on GitHub (<a href="https://github.com/agileanimal/grape-entity">https://github.com/agileanimal/grape-entity</a>) for information.</footer>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
       <h2>Connecting to a database</h2>
-      <h3>ActiveRecord</h3>
+      <h3>ActiveRecord + Standalone Migrations</h3>
     </hgroup>
     <article>
       <p></p>
@@ -740,16 +816,23 @@ end
   <slide>
     <hgroup>
       <h2>Self-generating documentation</h2>
-      <h3>Swagger</h3>
+      <h3>Swagger specification + Grape-Swagger</h3>
     </hgroup>
-    <article>
-      <p></p>
-      <p></p>
+    <article class="smaller">
+      <p>The <code>grape-swagger</code> gem provides an auto-documenting mechanism for Grape APIs that registers <code>/swagger-doc.json</code> as an API mount point for the documentation.</p>
       <pre class="prettyprint" data-lang="ruby">
+class BudgetData::API < Grape::API
+  mount BudgetData::OutlaysAPIv1 => '/outlays/v1'
+  mount BudgetData::OutlaysAPIv2 => '/outlays/v2'
+  mount BudgetData::BudgetAuthorityAPIv1 => '/budauth/v1'
+  mount BudgetData::BudgetAuthorityAPIv2 => '/budauth/v2'
+  mount BudgetData::ReceiptsAPIv1 => '/receipts/v1'
+  mount BudgetData::ReceiptsAPIv2 => '/receipts/v2'
+  <b>add_swagger_documentation</b>
+end
 </pre>
-      <p></p>
-      <pre class="prettyprint" data-lang="ruby">
-</pre>
+      <p>To explore the docs, set up an instance of <a href="https://github.com/wordnik/swagger-ui">Swagger UI</a> or use the <a href="http://petstore.swagger.wordnik.com/">online demo</a> and enter your localhost URL for the documentation route.</p>
+      <p>Swagger and Grape-Swagger each have many options.  For more on these, see <a href="https://github.com/wordnik/swagger-core/wiki">swagger-core</a> and <a href="https://github.com/tim-vandecasteele/grape-swagger">grape-swagger</a> projects, respectively, on GitHub.
     </article>
   </slide>
 
@@ -758,13 +841,26 @@ end
       <h2>API-testing documentation</h2>
       <h3>Apiary.io Blueprints</h3>
     </hgroup>
-    <article>
+    <article class="smaller">
+      <p><a href="http://apiary.io">Apiary</a> provides a service and custom DSL for describing an API targeted at collaboration, merging and version management on your API.</p>
+      <p>The API's <a href="http://apiary.io/blueprint">Blueprint</a> allows Apiary to generate docs, a debugging proxy and bug reports for your API.</p>
       <p></p>
-      <p></p>
-      <pre class="prettyprint" data-lang="ruby">
-</pre>
-      <p></p>
-      <pre class="prettyprint" data-lang="ruby">
+      <pre class="prettyprint" data-lang="blueprint">
+HOST: http://my.budgetdata.host.com/
+
+--- Public Budget Database API v1 ---
+---
+Generic information about the API and v1 goes here.
+---
+
+--- Budget Authority ---
+GET /budauth/v1/fy/2003
+> Accept: application/json
+< 200
+< Content-Type: application/json
+{ ... expected JSON goes here ... }
+
+...
 </pre>
     </article>
   </slide>
