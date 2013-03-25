@@ -53,6 +53,30 @@ URL: https://code.google.com/p/io-2012-slides
 
   <slide>
     <hgroup>
+      <h2>There are several roles you can play in Open Data</h2>
+    </hgroup>
+    <article class="centered">
+      <!--object data="images/open_data_roles.svg" type="image/svg+xml" width="800px" height="600px"-->
+      <img src="images/open_data_roles.png" width="800px" height="494px" alt="Diagram of Open Data Roles" />
+      <!--/object-->
+      <!--embed src="images/open_data_roles.svg" width="800px" height="600px"/-->
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>This talk will focus on the API Developer role</h2>
+    </hgroup>
+    <article class="centered">
+      <!--object data="images/open_data_roles_API_dev.svg" type="image/svg+xml" width="800px" height="600px"-->
+      <img src="images/open_data_roles_API_dev.png" width="800px" height="513px" alt="Diagram of Open Data Roles with API Developer highlighted"/>
+      <!--/object-->
+      <!--embed src="images/open_data_roles_API_dev.svg" width="800px" height="600px"/-->
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
       <h2>Focus on government transparency is not new</h2>
     </hgroup>
     <article>
@@ -82,6 +106,8 @@ URL: https://code.google.com/p/io-2012-slides
     </hgroup>
     <article>
       <ul>
+        <li>Many data exist only in files on individuals' desktops or shared drives</li>
+        <li>Within an agency there are many data owners, each owning a portion of enterprise data</li>
         <li>Government agencies need to determine what data can be made public</li>
         <ul>
           <li>Legitimate concerns about citizen privacy and national security</li>
@@ -91,30 +117,6 @@ URL: https://code.google.com/p/io-2012-slides
         <li>Once review processes are complete, agencies release data as quickly as possible, often without any modification of format</li>
         <li>Many researchers request bulk data formats, which agencies interpret as uploading flat files to their web servers</li>
       </ul>
-    </article>
-  </slide>
-
-  <slide>
-    <hgroup>
-      <h2>There are several roles you can play in Open Data</h2>
-    </hgroup>
-    <article class="centered">
-      <!--object data="images/open_data_roles.svg" type="image/svg+xml" width="800px" height="600px"-->
-      <img src="images/open_data_roles.png" width="800px" height="494px" alt="Diagram of Open Data Roles" />
-      <!--/object-->
-      <!--embed src="images/open_data_roles.svg" width="800px" height="600px"/-->
-    </article>
-  </slide>
-
-  <slide>
-    <hgroup>
-      <h2>This talk will focus on the API Developer role</h2>
-    </hgroup>
-    <article class="centered">
-      <!--object data="images/open_data_roles_API_dev.svg" type="image/svg+xml" width="800px" height="600px"-->
-      <img src="images/open_data_roles_API_dev.png" width="800px" height="513px" alt="Diagram of Open Data Roles with API Developer highlighted"/>
-      <!--/object-->
-      <!--embed src="images/open_data_roles_API_dev.svg" width="800px" height="600px"/-->
     </article>
   </slide>
 
@@ -264,7 +266,7 @@ URL: https://code.google.com/p/io-2012-slides
       <ul>
         <li>Providing for granularity, subset retrieval, and on-the-fly aggregation</li>
         <li>Providing several data formats</li>
-        <li>Allowing for simultaneous availability of bulk download and streamed data</li>
+        <li>Allowing for simultaneous availability of bulk download and partial or streamed data</li>
         <li>Providing the opportunity for multiple versions of the same API</li>
       </ul>
     </article>
@@ -278,10 +280,11 @@ URL: https://code.google.com/p/io-2012-slides
       <q>Data is reasonably structured to allow automated processing.</q>
       <p>APIs by definition are intended to enable automated processing:</p>
       <ul>
-        <li>Calls can be ReSTful over the web or use heavier web service models</li>
         <li>APIs can return a variety of data formats based on parameters in the API call</li>
+        <li>Calls can be ReSTful over the web or use heavier web service models</li>
         <li>Providing API wrappers for common languages is a simple task that can further enable users to do automated processing</li>
         <li>Agencies can use the same APIs to build visualizations and explanations of the data for their websites and publications</li>
+        <li>Agencies can automate portions of their disclosure review processes by using internal-facing versions of the same APIs</li>
       </ul>
     </article>
   </slide>
@@ -294,7 +297,7 @@ URL: https://code.google.com/p/io-2012-slides
       <q>Data is available in a format over which no entity has exclusive control.</q>
       <p>Well-designed APIs provide data in a variety of formats:</p>
       <ul>
-        <li>APIs provide data in well-used open standards-based data formats like XML, JSON, and OData</li>
+        <li>APIs can provide data in well-used open standards-based data formats like JSON, XML, and OData</li>
         <li>Providing more proprietary formats is also possible where necessary, but does not preclude the open standards-based formats</li>
         <li>Data format documentation can be baked into the API as a structure or schema call</li>
         <li>Creation of documentation can be automated so that the API can self-generate and deploy documentation to a website</li>
@@ -392,24 +395,9 @@ URL: https://code.google.com/p/io-2012-slides
   <slide class="segue dark nobackground">
     <aside class="gdbar"><img src="images/UM-webglobelg.gif"></aside>
     <hgroup class="auto-fadein">
-      <h2>Building the API</h2>
-      <h3>Some examples from my experience</h3>
+      <h2>Building an Open Data API</h2>
+      <h3>Thoughts on what to do and how</h3>
     </hgroup>
-    <aside class="note">
-      3 Things to cover
-        a Spinning up an API in no time (Ruby + Rack + Grape)
-        a.1 Modeling entities (grape-entity)
-        b Connecting to a database via ActiveRecord (+ AR + SM or - Rack + Rails)
-        c Creating versions and components (version method)
-        d Defining API endpoints (desc "string" get :symbol do stuff_here end)
-        e Using different data formats (format, default_format methods)
-        f Self-generating documentation (+ Swagger + grape-swagger)
-        e Logging (logger object)
-        g Performance monitoring (+ NewRelic + newrelic-grape)
-      4 Work in progress -- more to do
-        a Skeleton project available at my github account
-        b When fully debugged, budget API will be available for others to use
-    </aside>
   </slide>
 
   <slide>
@@ -484,7 +472,7 @@ URL: https://code.google.com/p/io-2012-slides
             <td></td>
           </tr>
           <tr class="equal-width-data-cols">
-            <th>Modeling entities and pulling data from a database</th>
+            <th>Pulling data from a database</th>
             <td class="highlight">&#10004;</td>
             <td class="highlight">&#10004;</td>
             <td></td>
@@ -529,8 +517,9 @@ URL: https://code.google.com/p/io-2012-slides
           <li>Connecting to a database</li>
           <li>Self-generating and API-testing documentation</li>
         </ul>
+        <p>Note: My API is a work in progress, so nothing here is final.  These are just thoughts along the way.</p>
       </section>
-      <p>&nbsp;</p><p>&nbsp;</p>
+      <p>&nbsp;</p>
       <section>
         <h3 style="font-weight: bold;">My development stack</h3>
         <a href="https://github.com/intridea/grape"><img src="images/languages/grape.png" alt="Grape" title="Grape" /></a>
